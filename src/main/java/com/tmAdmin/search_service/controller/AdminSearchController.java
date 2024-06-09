@@ -4,6 +4,7 @@ import com.tmAdmin.search_service.dto.TouristCompanyDto;
 import com.tmAdmin.search_service.exception.CustomException;
 import com.tmAdmin.search_service.service.SearchService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,6 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/tourism/api/v1/admin")
+@Validated
 public class AdminSearchController {
 
     @Autowired
