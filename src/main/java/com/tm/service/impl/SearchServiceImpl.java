@@ -10,6 +10,7 @@ import com.tm.exception.CustomException;
 import com.tm.repository.TariffRepository;
 import com.tm.repository.TouristCompanyRepository;
 import jakarta.transaction.Transactional;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
@@ -17,7 +18,6 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-
 @Service
 public class SearchServiceImpl implements SearchService {
     @Autowired
@@ -27,7 +27,7 @@ public class SearchServiceImpl implements SearchService {
     private TariffRepository tariffRepository;
 
     @KafkaListener(topics = "tourist-company-topic" , groupId = "group_id")
-    private void processTourismCompanyEvent(TouristCompanyEvent event) {
+    public void processTourismCompanyEvent(TouristCompanyEvent event) {
         if(event.getEventType().contains("AddTourismCompany")) {
             touristCompanyRepository.save(event.getTouristCompany());
         } else if(event.getEventType().contains("UpdateTariff")) {
@@ -85,6 +85,7 @@ public class SearchServiceImpl implements SearchService {
                 .collect(Collectors.toList());
         tariffRepository.deleteAll(tariffsToDelete);
     }
+
 
     @Override
     public List<TouristCompanyDto> searchByBranchId(Long branchId) {

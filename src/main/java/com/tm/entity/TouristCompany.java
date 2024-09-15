@@ -23,7 +23,7 @@ public class TouristCompany {
     private String contact;
     private String email;
 
-    @OneToMany(mappedBy = "touristCompany", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "touristCompany", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JsonManagedReference
     private List<Tariff> tariffs;
 
