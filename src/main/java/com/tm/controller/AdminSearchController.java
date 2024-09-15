@@ -1,8 +1,8 @@
-package com.tmAdmin.search_service.controller;
+package com.tm.controller;
 
-import com.tmAdmin.search_service.dto.TouristCompanyDto;
-import com.tmAdmin.search_service.exception.CustomException;
-import com.tmAdmin.search_service.service.SearchService;
+import com.tm.dto.TouristCompanyDto;
+import com.tm.exception.CustomException;
+import com.tm.service.SearchService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,6 +19,7 @@ public class AdminSearchController {
 
     @Autowired
     private SearchService searchService;
+
 
     @GetMapping("/{criteria}/{criteriaValue}")
     public List<TouristCompanyDto> search(@PathVariable String criteria, @PathVariable String criteriaValue) {

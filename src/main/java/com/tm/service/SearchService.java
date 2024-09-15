@@ -1,7 +1,6 @@
-package com.tmAdmin.search_service.service;
+package com.tm.service;
 
-import com.tmAdmin.search_service.dto.TouristCompanyDto;
-import org.springframework.data.domain.Page;
+import com.tm.dto.TouristCompanyDto;
 
 import java.util.List;
 

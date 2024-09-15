@@ -1,4 +1,4 @@
-package com.tmAdmin.search_service.config;
+package com.tm.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;

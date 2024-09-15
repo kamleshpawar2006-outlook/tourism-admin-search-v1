@@ -1,4 +1,4 @@
-package com.tmAdmin.search_service.exception;
+package com.tm.exception;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

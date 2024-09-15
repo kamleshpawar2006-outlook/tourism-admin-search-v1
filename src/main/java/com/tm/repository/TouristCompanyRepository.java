@@ -1,6 +1,6 @@
-package com.tmAdmin.search_service.repository;
+package com.tm.repository;
 
-import com.tmAdmin.search_service.entity.TouristCompany;
+import com.tm.entity.TouristCompany;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

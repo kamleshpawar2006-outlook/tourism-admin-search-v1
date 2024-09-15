@@ -1,4 +1,4 @@
-package com.tmAdmin.search_service.dto;
+package com.tm.dto;
 
 import lombok.Data;
 

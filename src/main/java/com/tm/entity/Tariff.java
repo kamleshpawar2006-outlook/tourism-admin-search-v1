@@ -1,5 +1,6 @@
-package com.tmAdmin.search_service.entity;
+package com.tm.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -11,7 +12,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "tariff", uniqueConstraints = @UniqueConstraint(columnNames = {"branchId", "place"}))
+@Table(name = "read-tariff", uniqueConstraints = @UniqueConstraint(columnNames = {"branchId", "place"}))
 public class Tariff {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,6 +22,7 @@ public class Tariff {
 
     @ManyToOne
     @JoinColumn(name = "branchId", nullable = false)
+    @JsonBackReference
     private TouristCompany touristCompany;
 
     @Override
