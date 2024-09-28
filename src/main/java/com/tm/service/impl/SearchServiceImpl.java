@@ -105,36 +105,53 @@ public class SearchServiceImpl implements SearchService {
         if (!List.of("ANDAMAN", "THAILAND", "DUBAI", "SINGAPORE", "MALAYSIA").contains(place.toUpperCase())) {
             throw new CustomException("Invalid place");
         }
+
         List<Tariff> tariffs = tariffRepository.findByPlaceOrderByTariffAmountDesc(place);
+
         return tariffs.stream()
-                .collect(Collectors.groupingBy(Tariff::getTouristCompany))
+                .collect(Collectors.groupingBy(Tariff::getTouristCompany))  // Group tariffs by TouristCompany
                 .entrySet().stream()
                 .map(entry -> {
-                    TouristCompanyDto companyDto = convertToResponseDto(entry.getKey());
-                    List<TariffDto> tariffDtos = entry.getValue().stream().map(this::convertToTariffDto).collect(Collectors.toList());
-                    companyDto.setTariffs(tariffDtos);
-                    return companyDto;
-                }).collect(Collectors.toList());
+                    List<TariffDto> tariffDtos = entry.getValue().stream()
+                            .map(this::convertToTariffDto)
+                            .collect(Collectors.toList());
+
+                    return new TouristCompanyDto.Builder()
+                            .withBranchId(entry.getKey().getBranchId())     // Set Branch ID
+                            .withBranchName(entry.getKey().getBranchName()) // Set Branch Name
+                            .withPlace(entry.getKey().getPlace())           // Set Place
+                            .withWebsite(entry.getKey().getWebsite())       // Set Website
+                            .withContact(entry.getKey().getContact())       // Set Contact
+                            .withEmail(entry.getKey().getEmail())           // Set Email
+                            .withTariffs(tariffDtos)                        // Set the List of TariffDtos
+                            .build();
+                })
+                .collect(Collectors.toList());
     }
 
     private TouristCompanyDto convertToResponseDto(TouristCompany company) {
-        TouristCompanyDto dto = new TouristCompanyDto();
-        dto.setBranchId(company.getBranchId());
-        dto.setBranchName(company.getBranchName());
-        dto.setPlace(company.getPlace());
-        dto.setWebsite(company.getWebsite());
-        dto.setContact(company.getContact());
-        dto.setEmail(company.getEmail());
-        List<TariffDto> tariffDtos = company.getTariffs().stream().map(this::convertToTariffDto).collect(Collectors.toList());
-        dto.setTariffs(tariffDtos);
+        List<TariffDto> tariffDtos = company.getTariffs().stream()
+                .map(this::convertToTariffDto)
+                .collect(Collectors.toList());
+
+        TouristCompanyDto dto = new TouristCompanyDto.Builder()
+                .withBranchId(company.getBranchId())
+                .withBranchName(company.getBranchName())
+                .withPlace(company.getPlace())
+                .withWebsite(company.getWebsite())
+                .withContact(company.getContact())
+                .withEmail(company.getEmail())
+                .withTariffs(tariffDtos)
+                .build();
         return dto;
     }
 
     private TariffDto convertToTariffDto(Tariff tariff) {
-        TariffDto dto = new TariffDto();
-        dto.setTariffId(tariff.getTariffId());
-        dto.setPlace(tariff.getPlace());
-        dto.setTariffAmount(tariff.getTariffAmount());
+        TariffDto dto = new TariffDto.Builder()
+                .withTariffId(tariff.getTariffId())
+                .withPlace(tariff.getPlace())
+                .withTariffAmount(tariff.getTariffAmount())
+                .build();
         return dto;
     }
 
